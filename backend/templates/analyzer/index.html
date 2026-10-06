@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI-GUARD | Job Scam Detector</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #ffffff,
+                    #f5f3ff
+                );
+
+            min-height: 100vh;
+
+            color: #1e293b;
+        }
+
+
+        /* ==============================
+           NAVBAR
+        ============================== */
+
+        .navbar {
+            background: #172554;
+
+            padding: 18px 8%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            color: white;
+        }
+
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+
+        .nav-right {
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .username {
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+        }
+
+
+        .nav-link {
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 15px;
+        }
+
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+
+        .logout-btn {
+            background: #dc2626;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 9px 15px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+
+        .logout-btn:hover {
+            background: #b91c1c;
+        }
+
+
+        /* LANGUAGE */
+
+        #languageSelect {
+            padding: 9px 12px;
+
+            border-radius: 8px;
+
+            border: none;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            background: white;
+
+            color: #172554;
+        }
+
+
+        /* ==============================
+           MAIN
+        ============================== */
+
+        .container {
+            width: 90%;
+
+            max-width: 1100px;
+
+            margin: 40px auto;
+        }
+
+
+        /* ==============================
+           HERO
+        ============================== */
+
+        .hero {
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            color: white;
+
+            padding: 45px;
+
+            border-radius: 22px;
+
+            text-align: center;
+
+            box-shadow:
+                0 12px 30px
+                rgba(37, 99, 235, 0.2);
+        }
+
+
+        .hero h1 {
+            font-size: 42px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .hero p {
+            font-size: 18px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ==============================
+           CARD
+        ============================== */
+
+        .card {
+            background: white;
+
+            margin-top: 30px;
+
+            padding: 30px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(15, 23, 42, 0.08);
+        }
+
+
+        .card h2 {
+            margin-bottom: 10px;
+
+            color: #172554;
+        }
+
+
+        .card p {
+            color: #64748b;
+
+            margin-bottom: 20px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ==============================
+           TEXTAREA
+        ============================== */
+
+        textarea {
+            width: 100%;
+
+            min-height: 220px;
+
+            padding: 18px;
+
+            border: 2px solid #e2e8f0;
+
+            border-radius: 12px;
+
+            resize: vertical;
+
+            font-size: 16px;
+
+            outline: none;
+        }
+
+
+        textarea:focus {
+            border-color: #2563eb;
+        }
+
+
+        /* ==============================
+           BUTTONS
+        ============================== */
+
+        .button-row {
+            display: flex;
+
+            gap: 15px;
+
+            margin-top: 18px;
+
+            flex-wrap: wrap;
+        }
+
+
+        button {
+            border: none;
+
+            padding: 13px 25px;
+
+            border-radius: 10px;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+
+        .analyze-btn {
+            background: #2563eb;
+
+            color: white;
+        }
+
+
+        .analyze-btn:hover {
+            background: #1d4ed8;
+        }
+
+
+        .clear-btn {
+            background: #e2e8f0;
+
+            color: #334155;
+        }
+
+
+
+        /* ==============================
+           EXAMPLE JOBS
+        ============================== */
+
+        .example-section {
+            margin-top: 20px;
+        }
+
+        .example-section h3 {
+            color: #172554;
+            margin-bottom: 12px;
+        }
+
+        .example-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .example {
+            padding: 10px 16px;
+            border-radius: 9px;
+            font-size: 14px;
+            color: white;
+        }
+
+        .example.scam {
+            background: #dc2626;
+        }
+
+        .example.medium {
+            background: #f59e0b;
+        }
+
+        .example.safe {
+            background: #16a34a;
+        }
+
+        .example:hover {
+            opacity: 0.9;
+        }
+
+        /* ==============================
+           SCAM KEYWORD HIGHLIGHTING
+        ============================== */
+
+        .keyword-section {
+            margin-top: 25px;
+        }
+
+        .keyword-box {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-left: 5px solid #f97316;
+            padding: 18px;
+            border-radius: 12px;
+            line-height: 1.8;
+        }
+
+        .keyword-tag {
+            display: inline-block;
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+            padding: 5px 9px;
+            margin: 4px;
+            border-radius: 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .no-keywords {
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        /* ==============================
+           SAFETY TIPS
+        ============================== */
+
+        .safety-section {
+            margin-top: 25px;
+        }
+
+        .safety-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-left: 5px solid #16a34a;
+            padding: 18px;
+            border-radius: 12px;
+        }
+
+        .safety-box p {
+            color: #166534;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .safety-box p:last-child {
+            margin-bottom: 0;
+        }
+
+
+        /* ==============================
+           RESULT
+        ============================== */
+
+        .result {
+            display: none;
+
+            margin-top: 30px;
+        }
+
+
+        .score-box {
+            text-align: center;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            background: #f8fafc;
+        }
+
+
+        .score {
+            font-size: 48px;
+
+            font-weight: bold;
+
+            margin: 10px 0;
+        }
+
+
+        .risk-level {
+            font-size: 22px;
+
+            font-weight: bold;
+        }
+
+
+        /* ==============================
+           PROGRESS BAR
+        ============================== */
+
+        .progress-container {
+            width: 100%;
+
+            height: 18px;
+
+            background: #e2e8f0;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            margin-top: 15px;
+        }
+
+
+        .progress-bar {
+            height: 100%;
+
+            width: 0%;
+
+            transition: width 0.6s ease;
+        }
+
+
+        /* ==============================
+           SECTIONS
+        ============================== */
+
+        .section {
+            margin-top: 25px;
+        }
+
+
+        .section h3 {
+            margin-bottom: 12px;
+
+            color: #172554;
+        }
+
+
+        ul {
+            padding-left: 22px;
+        }
+
+
+        li {
+            margin-bottom: 8px;
+
+            line-height: 1.5;
+        }
+
+
+        .recommendation {
+            background: #eff6ff;
+
+            padding: 18px;
+
+            border-radius: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ==============================
+           AI EXPLANATION
+        ============================== */
+
+        .ai-explanation {
+            margin-top: 25px;
+
+            padding: 22px;
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f5f3ff
+                );
+
+            border-left: 5px solid #7c3aed;
+
+            line-height: 1.7;
+
+            box-shadow:
+                0 5px 15px
+                rgba(124, 58, 237, 0.08);
+        }
+
+
+        .ai-explanation h3 {
+            color: #5b21b6;
+
+            margin-bottom: 10px;
+        }
+
+
+        .ai-explanation p {
+            margin: 0;
+
+            color: #475569;
+        }
+
+
+        /* ==============================
+           HISTORY BUTTON
+        ============================== */
+
+        .history-btn {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            text-decoration: none;
+
+            background: #172554;
+
+            color: white;
+
+            padding: 12px 22px;
+
+            border-radius: 10px;
+        }
+
+
+        /* ==============================
+           LOADING
+        ============================== */
+
+        .loading {
+            display: none;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #2563eb;
+
+            font-weight: bold;
+        }
+
+
+        /* ==============================
+           FOOTER
+        ============================== */
+
+        footer {
+            text-align: center;
+
+            padding: 30px;
+
+            color: #64748b;
+        }
+
+
+        /* ==============================
+           TABLET
+        ============================== */
+
+        @media (max-width: 900px) {
+
+            .navbar {
+                padding: 18px 5%;
+            }
+
+
+            .container {
+                width: 94%;
+
+                margin: 25px auto;
+            }
+
+
+            .hero {
+                padding: 35px 25px;
+            }
+
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+        }
+
+
+        /* ==============================
+           MOBILE
+        ============================== */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px;
+
+                flex-direction: column;
+
+                gap: 15px;
+
+                text-align: center;
+            }
+
+
+            .logo {
+                font-size: 22px;
+            }
+
+
+            .nav-right {
+                width: 100%;
+
+                display: flex;
+
+                flex-direction: column;
+
+                gap: 10px;
+            }
+
+
+            .username,
+            .nav-link,
+            .logout-btn,
+            #languageSelect {
+                width: 100%;
+
+                text-align: center;
+            }
+
+
+            .logout-btn {
+                padding: 11px;
+            }
+
+
+            #languageSelect {
+                padding: 11px;
+            }
+
+
+            .container {
+                width: 94%;
+
+                margin: 20px auto;
+            }
+
+
+            .hero {
+                padding: 30px 18px;
+
+                border-radius: 16px;
+            }
+
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+
+            .hero p {
+                font-size: 16px;
+            }
+
+
+            .card {
+                margin-top: 20px;
+
+                padding: 20px;
+
+                border-radius: 15px;
+            }
+
+
+            .card h2 {
+                font-size: 21px;
+            }
+
+
+            textarea {
+                min-height: 180px;
+
+                padding: 14px;
+
+                font-size: 15px;
+            }
+
+
+            .button-row {
+                flex-direction: column;
+
+                gap: 10px;
+            }
+
+
+            .button-row button {
+                width: 100%;
+            }
+
+
+            .score {
+                font-size: 40px;
+            }
+
+
+            .risk-level {
+                font-size: 19px;
+            }
+
+
+            .section h3 {
+                font-size: 18px;
+            }
+
+            .keyword-box {
+                padding: 14px;
+                font-size: 14px;
+            }
+
+            .keyword-tag {
+                font-size: 13px;
+                padding: 5px 7px;
+            }
+
+
+
+            .recommendation {
+                padding: 15px;
+
+                font-size: 14px;
+            }
+
+
+            .ai-explanation {
+                padding: 16px;
+
+                font-size: 14px;
+            }
+
+
+            .history-btn {
+                width: 100%;
+
+                text-align: center;
+
+                padding: 13px;
+            }
+
+
+            footer {
+                padding: 25px 15px;
+
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==============================
+         NAVBAR
+    ============================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🛡️ AI-GUARD
+        </div>
+
+
+        <div class="nav-right">
+
+            <span class="username">
+                👤 {{ request.user.username }}
+            </span>
+
+
+            <select
+                id="languageSelect"
+                onchange="changeLanguage()"
+            >
+
+                <option value="en">
+                    🇬🇧 English
+                </option>
+
+                <option value="te">
+                    🇮🇳 తెలుగు
+                </option>
+
+                <option value="hi">
+                    🇮🇳 हिंदी
+                </option>
+
+            </select>
+
+
+            <a
+                href="/history/"
+                class="nav-link"
+                id="historyNav"
+            >
+                📋 History
+            </a>
+
+
+            <a
+                href="/logout/"
+                class="logout-btn"
+                id="logoutBtn"
+            >
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ==============================
+         MAIN
+    ============================== -->
+
+    <div class="container">
+
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <h1>
+                AI-GUARD 🛡️
+            </h1>
+
+
+            <p id="heroText">
+                Detect suspicious job offers and identify potential
+                job scams before you become a victim.
+            </p>
+
+        </section>
+
+
+        <!-- ANALYZE -->
+
+        <section class="card">
+
+            <h2 id="analyzeTitle">
+                🔍 Analyze a Job Offer
+            </h2>
+
+
+            <p id="analyzeDescription">
+                Paste the job description below and AI-GUARD
+                will check it for common scam warning signs.
+            </p>
+
+
+            <textarea
+                id="description"
+                placeholder="Paste the job description here..."
+            ></textarea>
+
+            <div class="example-section">
+
+                <h3>🎯 Try Example Jobs</h3>
+
+                <div class="example-buttons">
+
+                    <button
+                        type="button"
+                        class="example scam"
+                        onclick="loadExample('scam')"
+                    >
+                        🚨 Scam Example
+                    </button>
+
+                    <button
+                        type="button"
+                        class="example medium"
+                        onclick="loadExample('medium')"
+                    >
+                        ⚠️ Medium Risk Example
+                    </button>
+
+                    <button
+                        type="button"
+                        class="example safe"
+                        onclick="loadExample('safe')"
+                    >
+                        🟢 Safe Job Example
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="button-row">
+
+                <button
+                    class="analyze-btn"
+                    onclick="analyzeJob()"
+                    id="analyzeButton"
+                >
+                    🔎 Analyze Job
+                </button>
+
+
+                <button
+                    class="clear-btn"
+                    onclick="clearForm()"
+                    id="clearButton"
+                >
+                    🗑️ Clear
+                </button>
+
+            </div>
+
+
+            <div
+                class="loading"
+                id="loading"
+            >
+                🔄 Analyzing job description...
+            </div>
+
+        </section>
+
+
+        <!-- RESULT -->
+
+        <section
+            class="card result"
+            id="result"
+        >
+
+            <h2 id="resultTitle">
+                📊 Analysis Result
+            </h2>
+
+
+            <div class="score-box">
+
+                <div
+                    class="score"
+                    id="score"
+                >
+                    0/100
+                </div>
+
+
+                <div
+                    class="risk-level"
+                    id="riskLevel"
+                >
+                    Low Risk
+                </div>
+
+
+                <div class="progress-container">
+
+                    <div
+                        class="progress-bar"
+                        id="progressBar"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI EXPLANATION -->
+
+            <div class="ai-explanation">
+
+                <h3 id="aiExplanationTitle">
+                    🤖 Why is this job risky?
+                </h3>
+
+                <p id="aiExplanation">
+                    AI-GUARD will explain the detected warning signs here.
+                </p>
+
+            </div>
+
+
+            <!-- SCAM KEYWORDS -->
+
+            <div class="section keyword-section">
+
+                <h3>
+                    🔎 Suspicious Keywords Found
+                </h3>
+
+                <div
+                    class="keyword-box"
+                    id="keywordBox"
+                >
+                    <span class="no-keywords">
+                        No suspicious keywords detected.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <!-- WARNING SIGNS -->
+
+            <div class="section">
+
+                <h3 id="warningTitle">
+                    🚩 Detected Warning Signs
+                </h3>
+
+
+                <ul id="warningList"></ul>
+
+            </div>
+
+
+            <!-- RECOMMENDATION -->
+
+            <div class="section">
+
+                <h3 id="recommendationTitle">
+                    🛡️ Safety Recommendation
+                </h3>
+
+
+                <div
+                    class="recommendation"
+                    id="recommendation"
+                ></div>
+
+            </div>
+
+
+            <!-- SAFETY TIPS -->
+
+            <div class="section safety-section">
+
+                <h3>
+                    🛡️ Safety Tips
+                </h3>
+
+                <div class="safety-box">
+
+                    <p>🔹 Never pay money to get a job.</p>
+
+                    <p>🔹 Never share OTPs or passwords with recruiters.</p>
+
+                    <p>🔹 Verify the company through its official website.</p>
+
+                    <p>🔹 Do not share bank or UPI details with unknown recruiters.</p>
+
+                    <p>🔹 Check whether the recruiter uses an official company email.</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- HISTORY -->
+
+        <div style="text-align:center;">
+
+            <a
+                href="/history/"
+                class="history-btn"
+                id="historyButton"
+            >
+                📋 View Analysis History
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer id="footerText">
+
+        🛡️ AI-GUARD | Job Scam Detection System
+
+    </footer>
+
+
+    <!-- ==============================
+         JAVASCRIPT
+    ============================== -->
+
+    <script>
+
+
+        /* ==============================
+           LANGUAGE DATA
+        ============================== */
+
+        const translations = {
+
+            en: {
+
+                heroText:
+                    "Detect suspicious job offers and identify potential job scams before you become a victim.",
+
+                analyzeTitle:
+                    "🔍 Analyze a Job Offer",
+
+                analyzeDescription:
+                    "Paste the job description below and AI-GUARD will check it for common scam warning signs.",
+
+                placeholder:
+                    "Paste the job description here...",
+
+                analyzeButton:
+                    "🔎 Analyze Job",
+
+                clearButton:
+                    "🗑️ Clear",
+
+                loading:
+                    "🔄 Analyzing job description...",
+
+                resultTitle:
+                    "📊 Analysis Result",
+
+                aiTitle:
+                    "🤖 Why is this job risky?",
+
+                warningTitle:
+                    "🚩 Detected Warning Signs",
+
+                recommendationTitle:
+                    "🛡️ Safety Recommendation",
+
+                historyNav:
+                    "📋 History",
+
+                historyButton:
+                    "📋 View Analysis History",
+
+                logout:
+                    "🚪 Logout",
+
+                footer:
+                    "🛡️ AI-GUARD | Job Scam Detection System",
+
+                noWarnings:
+                    "No major warning signs detected.",
+
+                enterDescription:
+                    "Please enter a job description.",
+
+                error:
+                    "Something went wrong. Please try again.",
+
+                lowRisk:
+                    "Low Risk ✅",
+
+                mediumRisk:
+                    "Medium Risk ⚠️",
+
+                highRisk:
+                    "High Risk 🚨",
+
+                safeExplanation:
+                    "This job has a low number of detected warning signs. However, always verify the employer before sharing personal or financial information.",
+
+                mediumExplanation:
+                    "This job contains some warning signs. Be careful and verify the employer, company website, official email address, and job details before proceeding.",
+
+                highExplanation:
+                    "This job contains several warning signs that may indicate a potential job scam. Do not pay upfront fees or share OTPs, passwords, bank details, or other sensitive information."
+
+            },
+
+
+            te: {
+
+                heroText:
+                    "అనుమానాస్పద ఉద్యోగ అవకాశాలను గుర్తించి, మీరు మోసానికి గురికాకముందే సంభావ్య ఉద్యోగ మోసాలను గుర్తించండి.",
+
+                analyzeTitle:
+                    "🔍 ఉద్యోగ అవకాశాన్ని విశ్లేషించండి",
+
+                analyzeDescription:
+                    "క్రింద ఉద్యోగ వివరణను పేస్ట్ చేయండి. AI-GUARD సాధారణ మోసపూరిత హెచ్చరికలను తనిఖీ చేస్తుంది.",
+
+                placeholder:
+                    "ఉద్యోగ వివరణను ఇక్కడ పేస్ట్ చేయండి...",
+
+                analyzeButton:
+                    "🔎 ఉద్యోగాన్ని విశ్లేషించండి",
+
+                clearButton:
+                    "🗑️ క్లియర్",
+
+                loading:
+                    "🔄 ఉద్యోగ వివరణను విశ్లేషిస్తోంది...",
+
+                resultTitle:
+                    "📊 విశ్లేషణ ఫలితం",
+
+                aiTitle:
+                    "🤖 ఈ ఉద్యోగం ఎందుకు ప్రమాదకరం?",
+
+                warningTitle:
+                    "🚩 గుర్తించిన హెచ్చరికలు",
+
+                recommendationTitle:
+                    "🛡️ భద్రతా సూచన",
+
+                historyNav:
+                    "📋 చరిత్ర",
+
+                historyButton:
+                    "📋 విశ్లేషణ చరిత్రను చూడండి",
+
+                logout:
+                    "🚪 లాగ్ అవుట్",
+
+                footer:
+                    "🛡️ AI-GUARD | ఉద్యోగ మోసం గుర్తింపు వ్యవస్థ",
+
+                noWarnings:
+                    "ప్రధాన హెచ్చరికలు ఏవీ గుర్తించబడలేదు.",
+
+                enterDescription:
+                    "దయచేసి ఉద్యోగ వివరణను నమోదు చేయండి.",
+
+                error:
+                    "ఏదో తప్పు జరిగింది. దయచేసి మళ్లీ ప్రయత్నించండి.",
+
+                lowRisk:
+                    "తక్కువ ప్రమాదం ✅",
+
+                mediumRisk:
+                    "మధ్యస్థ ప్రమాదం ⚠️",
+
+                highRisk:
+                    "అధిక ప్రమాదం 🚨",
+
+                safeExplanation:
+                    "ఈ ఉద్యోగంలో కొన్ని మాత్రమే హెచ్చరికలు గుర్తించబడ్డాయి. అయినప్పటికీ వ్యక్తిగత లేదా ఆర్థిక సమాచారాన్ని పంచుకునే ముందు సంస్థను ధృవీకరించండి.",
+
+                mediumExplanation:
+                    "ఈ ఉద్యోగంలో కొన్ని హెచ్చరికలు ఉన్నాయి. ముందుకు వెళ్లే ముందు సంస్థ, అధికారిక వెబ్‌సైట్, అధికారిక ఇమెయిల్ మరియు ఉద్యోగ వివరాలను ధృవీకరించండి.",
+
+                highExplanation:
+                    "ఈ ఉద్యోగంలో అనేక హెచ్చరికలు ఉన్నాయి. ఇది సంభావ్య ఉద్యోగ మోసం కావచ్చు. ముందస్తు రుసుములు చెల్లించవద్దు మరియు OTPలు, పాస్‌వర్డ్‌లు లేదా బ్యాంక్ వివరాలను పంచుకోవద్దు."
+
+            },
+
+
+            hi: {
+
+                heroText:
+                    "संदिग्ध नौकरी के प्रस्तावों का पता लगाएं और शिकार बनने से पहले संभावित नौकरी घोटालों की पहचान करें।",
+
+                analyzeTitle:
+                    "🔍 नौकरी के प्रस्ताव का विश्लेषण करें",
+
+                analyzeDescription:
+                    "नीचे नौकरी का विवरण पेस्ट करें। AI-GUARD सामान्य घोटाले के चेतावनी संकेतों की जांच करेगा।",
+
+                placeholder:
+                    "नौकरी का विवरण यहां पेस्ट करें...",
+
+                analyzeButton:
+                    "🔎 नौकरी का विश्लेषण करें",
+
+                clearButton:
+                    "🗑️ साफ़ करें",
+
+                loading:
+                    "🔄 नौकरी के विवरण का विश्लेषण हो रहा है...",
+
+                resultTitle:
+                    "📊 विश्लेषण परिणाम",
+
+                aiTitle:
+                    "🤖 यह नौकरी जोखिम भरी क्यों है?",
+
+                warningTitle:
+                    "🚩 पाए गए चेतावनी संकेत",
+
+                recommendationTitle:
+                    "🛡️ सुरक्षा सुझाव",
+
+                historyNav:
+                    "📋 इतिहास",
+
+                historyButton:
+                    "📋 विश्लेषण इतिहास देखें",
+
+                logout:
+                    "🚪 लॉग आउट",
+
+                footer:
+                    "🛡️ AI-GUARD | नौकरी घोटाला पहचान प्रणाली",
+
+                noWarnings:
+                    "कोई बड़ी चेतावनी नहीं मिली।",
+
+                enterDescription:
+                    "कृपया नौकरी का विवरण दर्ज करें।",
+
+                error:
+                    "कुछ गलत हुआ। कृपया फिर से प्रयास करें।",
+
+                lowRisk:
+                    "कम जोखिम ✅",
+
+                mediumRisk:
+                    "मध्यम जोखिम ⚠️",
+
+                highRisk:
+                    "उच्च जोखिम 🚨",
+
+                safeExplanation:
+                    "इस नौकरी में कम चेतावनी संकेत पाए गए हैं। फिर भी व्यक्तिगत या वित्तीय जानकारी साझा करने से पहले नियोक्ता की पुष्टि करें।",
+
+                mediumExplanation:
+                    "इस नौकरी में कुछ चेतावनी संकेत हैं। आगे बढ़ने से पहले नियोक्ता, कंपनी की वेबसाइट, आधिकारिक ईमेल और नौकरी की जानकारी सत्यापित करें।",
+
+                highExplanation:
+                    "इस नौकरी में कई चेतावनी संकेत हैं जो संभावित नौकरी घोटाले का संकेत दे सकते हैं। अग्रिम शुल्क का भुगतान न करें और OTP, पासवर्ड या बैंक विवरण साझा न करें।"
+
+            }
+
+        };
+
+
+        /* ==============================
+           LANGUAGE
+        ============================== */
+
+        let currentLanguage = "en";
+
+
+        /* ==============================
+           CHANGE LANGUAGE
+        ============================== */
+
+        function changeLanguage() {
+
+            currentLanguage =
+                document
+                    .getElementById("languageSelect")
+                    .value;
+
+
+            const t =
+                translations[currentLanguage];
+
+
+            document
+                .getElementById("heroText")
+                .textContent =
+                t.heroText;
+
+
+            document
+                .getElementById("analyzeTitle")
+                .textContent =
+                t.analyzeTitle;
+
+
+            document
+                .getElementById("analyzeDescription")
+                .textContent =
+                t.analyzeDescription;
+
+
+            document
+                .getElementById("description")
+                .placeholder =
+                t.placeholder;
+
+
+            document
+                .getElementById("analyzeButton")
+                .textContent =
+                t.analyzeButton;
+
+
+            document
+                .getElementById("clearButton")
+                .textContent =
+                t.clearButton;
+
+
+            document
+                .getElementById("loading")
+                .textContent =
+                t.loading;
+
+
+            document
+                .getElementById("resultTitle")
+                .textContent =
+                t.resultTitle;
+
+
+            document
+                .getElementById("aiExplanationTitle")
+                .textContent =
+                t.aiTitle;
+
+
+            document
+                .getElementById("warningTitle")
+                .textContent =
+                t.warningTitle;
+
+
+            document
+                .getElementById("recommendationTitle")
+                .textContent =
+                t.recommendationTitle;
+
+
+            document
+                .getElementById("historyNav")
+                .textContent =
+                t.historyNav;
+
+
+            document
+                .getElementById("historyButton")
+                .textContent =
+                t.historyButton;
+
+
+            document
+                .getElementById("logoutBtn")
+                .textContent =
+                t.logout;
+
+
+            document
+                .getElementById("footerText")
+                .textContent =
+                t.footer;
+
+
+            localStorage.setItem(
+                "aiGuardLanguage",
+                currentLanguage
+            );
+
+        }
+
+
+        /* ==============================
+           LOAD LANGUAGE
+        ============================== */
+
+        window.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                const savedLanguage =
+                    localStorage.getItem(
+                        "aiGuardLanguage"
+                    );
+
+
+                if (
+                    savedLanguage &&
+                    translations[savedLanguage]
+                ) {
+
+                    document
+                        .getElementById(
+                            "languageSelect"
+                        )
+                        .value =
+                        savedLanguage;
+
+
+                    currentLanguage =
+                        savedLanguage;
+
+                    changeLanguage();
+
+                }
+
+            }
+        );
+
+
+        /* ==============================
+           SCAM KEYWORD HIGHLIGHTING
+        ============================== */
+
+        function showSuspiciousKeywords(description) {
+
+            const keywordBox =
+                document.getElementById("keywordBox");
+
+            const keywords = [
+                "registration fee",
+                "training fee",
+                "processing fee",
+                "interview fee",
+                "security deposit",
+                "pay upfront",
+                "pay a fee",
+                "advance payment",
+                "guaranteed job",
+                "100% placement",
+                "guaranteed income",
+                "easy money",
+                "quick money",
+                "quick income",
+                "get rich quick",
+                "instant income",
+                "no interview",
+                "no experience",
+                "limited slots",
+                "limited time",
+                "apply now",
+                "urgent hiring",
+                "urgently hiring",
+                "hurry",
+                "act now",
+                "otp",
+                "verification code",
+                "bank account",
+                "bank details",
+                "credit card",
+                "debit card",
+                "upi",
+                "upi id",
+                "aadhaar",
+                "aadhar",
+                "passport",
+                "identity proof",
+                "id proof",
+                "pan card",
+                "whatsapp only",
+                "telegram only",
+                "whatsapp",
+                "telegram",
+                "personal email",
+                "invest money",
+                "deposit money",
+                "transfer money",
+                "send money",
+                "crypto investment",
+                "cryptocurrency investment",
+                "investment opportunity",
+                "password",
+                "login details",
+                "account password"
+            ];
+
+            const foundKeywords = [];
+
+            keywords.forEach(function(keyword) {
+
+                const pattern =
+                    new RegExp(
+                        "\\b" +
+                        keyword
+                            .replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")
+                            .replace(/\\s+/g, "\\\\s+") +
+                        "\\b",
+                        "i"
+                    );
+
+                if (pattern.test(description)) {
+                    foundKeywords.push(keyword);
+                }
+
+            });
+
+            keywordBox.innerHTML = "";
+
+            if (foundKeywords.length === 0) {
+
+                keywordBox.innerHTML =
+                    '<span class="no-keywords">' +
+                    'No suspicious keywords detected.' +
+                    '</span>';
+
+                return;
+            }
+
+            foundKeywords.forEach(function(keyword) {
+
+                const tag =
+                    document.createElement("span");
+
+                tag.className = "keyword-tag";
+
+                tag.textContent =
+                    "⚠️ " + keyword;
+
+                keywordBox.appendChild(tag);
+
+            });
+
+        }
+
+
+        /* ==============================
+           ANALYZE JOB
+        ============================== */
+
+        async function analyzeJob() {
+
+            const description =
+                document
+                    .getElementById("description")
+                    .value
+                    .trim();
+
+
+            const t =
+                translations[currentLanguage];
+
+
+            if (!description) {
+
+                alert(
+                    t.enterDescription
+                );
+
+                return;
+            }
+
+
+            const loading =
+                document.getElementById("loading");
+
+
+            const result =
+                document.getElementById("result");
+
+
+            loading.style.display =
+                "block";
+
+            result.style.display =
+                "none";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/analyze/",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                description:
+                                    description
+                            })
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (data.error) {
+
+                    alert(data.error);
+
+                    return;
+                }
+
+
+                /* SUSPICIOUS KEYWORDS */
+
+                showSuspiciousKeywords(description);
+
+
+                /* SCORE */
+
+                const score =
+                    document.getElementById(
+                        "score"
+                    );
+
+
+                score.textContent =
+                    data.risk_score + "/100";
+
+
+                /* RISK LEVEL */
+
+                const riskLevel =
+                    document.getElementById(
+                        "riskLevel"
+                    );
+
+
+                if (data.risk_score >= 70) {
+
+                    riskLevel.textContent =
+                        t.highRisk;
+
+                }
+
+                else if (data.risk_score >= 40) {
+
+                    riskLevel.textContent =
+                        t.mediumRisk;
+
+                }
+
+                else {
+
+                    riskLevel.textContent =
+                        t.lowRisk;
+
+                }
+
+
+                /* AI EXPLANATION */
+
+                const aiExplanation =
+                    document.getElementById(
+                        "aiExplanation"
+                    );
+
+
+                if (data.risk_score >= 70) {
+
+                    aiExplanation.textContent =
+                        t.highExplanation;
+
+                }
+
+                else if (data.risk_score >= 40) {
+
+                    aiExplanation.textContent =
+                        t.mediumExplanation;
+
+                }
+
+                else {
+
+                    aiExplanation.textContent =
+                        t.safeExplanation;
+
+                }
+
+
+                /* PROGRESS BAR */
+
+                const progressBar =
+                    document.getElementById(
+                        "progressBar"
+                    );
+
+
+                progressBar.style.width =
+                    data.risk_score + "%";
+
+
+                /* COLORS */
+
+                if (data.risk_score >= 70) {
+
+                    progressBar.style.background =
+                        "#dc2626";
+
+                    riskLevel.style.color =
+                        "#dc2626";
+
+                    score.style.color =
+                        "#dc2626";
+
+                }
+
+                else if (data.risk_score >= 40) {
+
+                    progressBar.style.background =
+                        "#f59e0b";
+
+                    riskLevel.style.color =
+                        "#f59e0b";
+
+                    score.style.color =
+                        "#f59e0b";
+
+                }
+
+                else {
+
+                    progressBar.style.background =
+                        "#16a34a";
+
+                    riskLevel.style.color =
+                        "#16a34a";
+
+                    score.style.color =
+                        "#16a34a";
+
+                }
+
+
+                /* WARNING LIST */
+
+                const warningList =
+                    document.getElementById(
+                        "warningList"
+                    );
+
+
+                warningList.innerHTML = "";
+
+
+                if (
+                    data.red_flags &&
+                    data.red_flags.length > 0
+                ) {
+
+                    data.red_flags.forEach(
+                        function(flag) {
+
+                            const li =
+                                document.createElement(
+                                    "li"
+                                );
+
+
+                            li.textContent =
+                                flag;
+
+
+                            warningList.appendChild(
+                                li
+                            );
+
+                        }
+                    );
+
+                }
+
+                else {
+
+                    const li =
+                        document.createElement(
+                            "li"
+                        );
+
+
+                    li.textContent =
+                        t.noWarnings;
+
+
+                    warningList.appendChild(
+                        li
+                    );
+
+                }
+
+
+                /* RECOMMENDATION */
+
+                document
+                    .getElementById(
+                        "recommendation"
+                    )
+                    .textContent =
+                    data.recommendation;
+
+
+                /* SHOW RESULT */
+
+                result.style.display =
+                    "block";
+
+
+                result.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+            }
+
+
+            catch (error) {
+
+                alert(
+                    t.error
+                );
+
+            }
+
+
+            finally {
+
+                loading.style.display =
+                    "none";
+
+            }
+
+        }
+
+
+
+
+        /* ==============================
+           EXAMPLE JOBS
+        ============================== */
+
+        function loadExample(type) {
+
+            const description =
+                document.getElementById("description");
+
+            if (type === "scam") {
+
+                description.value =
+`URGENT HIRING FOR FRESHERS!
+
+No experience required.
+Earn ₹50,000 per month working from home.
+
+Pay a registration fee of ₹500
+and a training fee of ₹2,000.
+
+Limited slots available.
+Apply now!
+
+Share your OTP for verification
+and provide your bank details.
+
+Guaranteed job and 100% placement.`;
+
+            }
+
+            else if (type === "medium") {
+
+                description.value =
+`We are hiring freshers for a work-from-home position.
+
+No prior experience is required.
+
+Candidates must communicate through WhatsApp
+for interview scheduling.
+
+The salary is ₹40,000 per month.
+
+Applicants must provide identity proof
+during the recruitment process.
+
+Apply soon as limited positions are available.`;
+
+            }
+
+            else if (type === "safe") {
+
+                description.value =
+`We are hiring a Junior Web Developer.
+
+This is a full-time position with a normal
+interview process.
+
+No registration fee is required.
+No training fee is required.
+
+Salary is ₹25,000 per month.
+
+Candidates can apply through our official
+company website.`;
+
+            }
+
+            description.focus();
+        }
+
+
+        /* ==============================
+           CLEAR
+        ============================== */
+
+        function clearForm() {
+
+            document
+                .getElementById("description")
+                .value = "";
+
+
+            document
+                .getElementById("result")
+                .style.display =
+                "none";
+
+        }
+
+
+    </script>
+
+</body>
+
+</html>
